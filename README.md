@@ -13,8 +13,6 @@ THEME: Murder Mystery
 
 TONALITY: Suspenseful & Intriguing
 
-SCENARIO: {scenario}
-
 OUTPUT: 
 
 When generating output, format it as a JSON object with the following structure:
