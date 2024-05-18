@@ -1,6 +1,7 @@
 import pyxel
 
 import constants
+import state_stack
 
 g_debug = False
 
@@ -17,6 +18,8 @@ class App:
             capture_sec=20,
         )
 
+        self.stack = state_stack.StateStack()
+
         pyxel.run(self.update, self.draw)
 
     def update(self):
@@ -24,8 +27,11 @@ class App:
             global g_debug
             g_debug = not g_debug
 
+        self.stack.update(self.input)
+
     def draw(self):
         pyxel.cls(pyxel.COLOR_BLACK)
+        self.stack.draw()
 
 
 App()
