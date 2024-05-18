@@ -1,0 +1,58 @@
+import state
+import tween
+
+
+class Jump(state.State):
+    def __init__(self, player, state_machine, world) -> None:
+        super().__init__()
+
+        self.name = "jump"
+        self.player = player
+        self.state_machine = state_machine
+        self.world = world
+
+    def enter(self, enter_params=None):
+        self.player.sprite.set_state("jump")
+
+        dist = 3.2
+        start = -3.2
+
+        def apply(value):
+            dy = start + (dist * value)
+            self.player.velocity_y = dy
+
+        self.player.velocity_y_tween = tween.TweenEvent(tween.Tween(0, 1, 0.3), apply)
+
+    def exit(self):
+        pass
+
+    def handle_input(self, inputs):
+        if inputs.tapped("button_attack"):
+            self.state_machine.change("attack")
+            return
+
+        if inputs.pressing("up") or inputs.pressing("down"):
+            tile = self.player.get_touching_climbable()
+
+            if tile is not None:
+                self.state_machine.change("climb")
+
+            return
+
+        move_x = 0
+
+        if inputs.pressing("left"):
+            move_x += -1
+
+        if inputs.pressing("right"):
+            move_x += 1
+
+        self.player.velocity_x = move_x * self.player.run_speed
+
+    def update(self):
+        if self.player.is_falling:
+            self.state_machine.change("fall")
+            return
+
+    def draw(self):
+        pass
