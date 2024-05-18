@@ -3,6 +3,7 @@ import pyxel
 import constants
 import state_stack
 import input
+import title_state
 
 g_debug = False
 
@@ -22,6 +23,14 @@ class App:
         self.input = input.Input()
 
         self.stack = state_stack.StateStack()
+        self.stack.push(
+            title_state.TitleState(
+                {
+                    "stack": self.stack,
+                    "inputs": self.input,
+                }
+            )
+        )
 
         pyxel.run(self.update, self.draw)
 
