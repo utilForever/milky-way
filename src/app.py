@@ -2,6 +2,7 @@ import pyxel
 
 import constants
 import state_stack
+import input
 
 g_debug = False
 
@@ -17,6 +18,8 @@ class App:
             capture_scale=1,
             capture_sec=20,
         )
+
+        self.input = input.Input()
 
         self.stack = state_stack.StateStack()
 
