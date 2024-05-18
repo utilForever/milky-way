@@ -20,6 +20,8 @@ class App:
             capture_sec=20,
         )
 
+        self._load_resources()
+
         self.input = input.Input()
 
         self.stack = state_stack.StateStack()
@@ -33,6 +35,15 @@ class App:
         )
 
         pyxel.run(self.update, self.draw)
+
+    def _load_resources(self):
+        pyxel.load("assets/res.pyxres")
+
+        pyxel.image(constants.IDX_IMAGE_TILES).load(0, 0, constants.IMAGE_FILE_TILES)
+        pyxel.image(constants.IDX_IMAGE_SPRITES).load(
+            0, 0, constants.IMAGE_FILE_SPRITES
+        )
+        pyxel.image(constants.IDX_IMAGE_GUI).load(0, 0, constants.IMAGE_FILE_GUI)
 
     def update(self):
         if pyxel.btnp(pyxel.KEY_F1):
